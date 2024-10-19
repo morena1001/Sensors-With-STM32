@@ -1,0 +1,2 @@
+1. Analog Temperature Sensor
+> The voltage out pin should be connected to an ADC configured pin in the microcontroller. The raw data should be adjusted by some constant to calibrate sensor properly, then divided by 100 to get temperature in C.
