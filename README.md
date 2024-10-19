@@ -2,7 +2,7 @@
 
 This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim of this project is to create different header and source files for every sensor, as well as documentation, to facilitate the usage of the sensors in the future. 
 
-- [x] White LED
+- [x] ~White LED~
 - [ ] RGB LED
 - [ ] 3W LED
 - [ ] Traffic light
@@ -20,7 +20,7 @@ This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim
 - [ ] Flame alarm
 - [ ] Reed switch
 - [ ] PIR motion sensing
-- [ ] ~Analog temperature~
+- [ ] Analog temperature
 - [ ] Analog rotation
 - [ ] Photoresistor
 - [ ] Analog sound
