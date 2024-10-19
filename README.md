@@ -20,7 +20,7 @@ This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim
 - [ ] Flame alarm
 - [ ] Reed switch
 - [ ] PIR motion sensing
-- [x] ~Analog temperature~
+- [ ] ~Analog temperature~
 - [ ] Analog rotation
 - [ ] Photoresistor
 - [ ] Analog sound
