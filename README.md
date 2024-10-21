@@ -12,18 +12,18 @@ This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim
 - [ ] Collision flash
 - [ ] Line tracking
 - [ ] Infrared obstacle avoidance
-- [ ] Photo interrupter
+- [x] Photo interrupter
 - [ ] Hall magnetic
 - [ ] Knock sensor
-- [ ] Digital tilt sensor
-- [ ] Capacitive touch
+- [x] Digital tilt sensor
+- [x] Capacitive touch
 - [ ] Flame alarm
-- [ ] Reed switch
-- [ ] PIR motion sensing
+- [x] Reed switch
+- [x] PIR motion sensing
 - [ ] Analog temperature
-- [ ] Analog rotation
-- [ ] Photoresistor
-- [ ] Analog sound
+- [x] Analog rotation
+- [x] Photoresistor
+- [x] Analog sound
 - [ ] Water level
 - [ ] Soil moisture
 - [ ] Analog gas
