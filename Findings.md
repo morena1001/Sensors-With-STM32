@@ -31,9 +31,90 @@ while (color >= 1000) {
 }
 ```
 ---
-**3. 3W LED**
+**11. Photo Interrupter**
 
+V connects to power, G connects to GND, and S is the out pin that is connected to PA0 configured to ADC1_IN1. When no objects are detected, the value returned is low, otherwise it returns the max value possible given the voltage.
 
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+```
+---
+**14. Digital Tilt Sensor**
 
-1. Analog Temperature Sensor
-> The voltage out pin should be connected to an ADC configured pin in the microcontroller. The raw data should be adjusted by some constant to calibrate sensor properly, then divided by 100 to get temperature in C.
+S, or the out pin, is connected to PA0 configured to ADC1_IN1. Only checks if the sensor is angled, not at the angle of the sensor. 
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+```
+---
+**15. Capacitive Touch Sensor**
+
+S is connected to a pin configured to be pulled up. Touching both sides of the sensor work, even though only the top part is decorated.
+
+```
+if (HAL_GPIO_ReadPin (CTB_GPIO_Port, CTB_Pin)) {
+	...
+}
+```
+---
+**17. Reed Switch Module**
+
+S is connected to PA0 configured to ADC1_IN1. If no magnet is detected, then PA0 is High, and and Low if otherwise.
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+```
+---
+**18. PIR Motion Sensor**
+
+S is connected to PA0 configured to ADC1_IN1. If no movement is detected, output is Low, else it is high. Can cover my entire room. 
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+```
+---
+**20. Analog Rotation Sensor**
+
+S is connected to PA0 configured to ADC1_IN1. The sensor turned all the way to the left returns Low, and all the way to the right returns High. An LED connected to PA4 configured to DAC_OUT1 changes brightness relative amount of turn in the sensor. Because my LED's have certain thresholds, after which they stop getting brighter or dimmer, the following code limits the value returned to an LED-operable range.
+
+The factor of multiplication was derived from dividing the range of possible return values of the sensor, 0 or Low, to 4095, or High (5V), by the range of LED-operables values, 2960 to 3240.
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = ((double) HAL_ADC_GetValue (&hadc1) * 0.0683761) + 2960;
+HAL_DAC_SetValue (&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, raw);
+```
+---
+**21. Photoresistor Sensor**
+
+S is connected to PA0 configured to ADC1_IN1. The more light there is, the higher the voltage returned. An LED connected to PA4 configured to DAC_OUT1 changes brightness relative to the amount of light in the environment.
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+HAL_DAC_SetValue (&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, raw);
+```
+---
+**22. Analog Sound Sensor**
+
+S is connected to PA0 configured to ADC1_IN1. The quieter the area, the lower the voltage. An LED connected to PA4 configured to DAC_OUT1 changes brightness relative amount of noise being picked up by microphone. Because my LED's have certain thresholds, after which they stop getting brighter or dimmer, the following code limits the value returned to an LED-operable range. Also, there is a lot of noise in the out voltage, so the LED doesn't shine consistently, even when continuous noise is picked up.
+
+The factor of multiplication was derived from dividing the range of possible return values of the sensor, 0 or Low, to 4095, or High (5V), by the range of LED-operables values, 2960 to 3240.
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = ((double) HAL_ADC_GetValue (&hadc1) * 0.0683761) + 2960;
+HAL_DAC_SetValue (&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, raw);
+```
+---
