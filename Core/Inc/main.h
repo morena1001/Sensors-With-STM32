@@ -57,11 +57,13 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define B1_Pin GPIO_PIN_13
-#define B1_GPIO_Port GPIOC
-#define B1_EXTI_IRQn EXTI15_10_IRQn
+#define CTB1_Pin GPIO_PIN_1
+#define CTB1_GPIO_Port GPIOC
 #define LED_Pin GPIO_PIN_1
 #define LED_GPIO_Port GPIOA
+#define CTB_Pin GPIO_PIN_0
+#define CTB_GPIO_Port GPIOB
+#define CTB_EXTI_IRQn EXTI0_IRQn
 
 /* USER CODE BEGIN Private defines */
 

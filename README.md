@@ -3,7 +3,7 @@
 This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim of this project is to create different header and source files for every sensor, as well as documentation, to facilitate the usage of the sensors in the future. 
 
 - [x] ~White LED~
-- [x] RGB LED
+- [x] ~RGB LED~
 - [ ] 3W LED
 - [ ] Traffic light
 - [ ] Buzzer beeping
@@ -12,32 +12,32 @@ This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim
 - [ ] Collision flash
 - [ ] Line tracking
 - [ ] Infrared obstacle avoidance
-- [ ] Photo interrupter
+- [x] ~Photo interrupter~
 - [ ] Hall magnetic
 - [ ] Knock sensor
-- [ ] Digital tilt sensor
-- [ ] Capacitive touch
+- [x] ~Digital tilt sensor~
+- [x] ~Capacitive touch~
 - [ ] Flame alarm
-- [ ] Reed switch
-- [ ] PIR motion sensing
+- [x] ~Reed switch~
+- [x] ~PIR motion sensing~
 - [ ] Analog temperature
-- [ ] Analog rotation
-- [ ] Photoresistor
-- [ ] Analog sound
-- [ ] Water level
-- [ ] Soil moisture
+- [x] ~Analog rotation~
+- [x] ~Photoresistor~
+- [x] ~Analog sound~
+- [x] ~Water level~
+- [x] ~Soil moisture~
 - [ ] Analog gas
 - [ ] Analog alcohol
 - [ ] Steam moisture
 - [ ] Analog ceramic vibration
-- [ ] Voltage detection
-- [ ] Pressure detection
-- [ ] Ambient light
+- [x] ~Voltage detection~
+- [x] ~Pressure detection~
+- [x] ~Ambient light~
 - [ ] Ultravoilet light
 - [ ] Digital IR Receiver
 - [ ] Digital IR transmitter
 - [ ] Pulse rate monitor
-- [ ] Joystick
+- [x] ~Joystick~
 - [ ] Rotary encorder
 - [ ] Single relay
 - [ ] Linear temperature
