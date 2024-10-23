@@ -118,3 +118,82 @@ raw = ((double) HAL_ADC_GetValue (&hadc1) * 0.0683761) + 2960;
 HAL_DAC_SetValue (&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, raw);
 ```
 ---
+**23. Water Sensor**
+
+S, or the out pin, is connected to PA0 configured to ADC1_IN1. Only checks if there is water present on the exposed wires, and not how much of the wires are submerged in water. 
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+```
+---
+**24. Soil Humidity Sensor**
+
+S, or the out pin, is connected to PA0 configured to ADC1_IN1. Checks the amount of humidity in the soil. More humidity, less resistance, higher voltage. 
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+```
+---
+**29. Voltage Sensor**
+
+S, or the out pin, is connected to PA0 configured to ADC1_IN1. Voltage divider using 30K and 7.5K ohm resistors. No 5V from board is needed, only GND.
+
+S = 7.5 / (30 + 7.5) * VCC
+
+VCC = 37.5 / 7.5 * Vout
+
+VCC = 37.5 / 7.5 * 3.3 = 16.5
+
+Note that calibtration is still needed to get correct readings. Pressing finger on the back of the board where the output pins are gives accurate description. Reason is unknown.
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = ((double) HAL_ADC_GetValue (&hadc1) / 4095) * 16.5;
+```
+---
+**30. Thin-film Pressure Sensor**
+
+S, or the out pin, is connected to PA0 configured to ADC1_IN1. When pressure is applied, high voltage is read. Note that there is no smooth transisition in voltage when applying pressure.
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+```
+---
+**31. TEMT6000 Ambient Light Sensor**
+
+S, or the out pin, is connected to PA0 configured to ADC1_IN1. The more light that the sensor detects, the higher the voltage.
+
+```
+HAL_ADC_Start (&hadc1);
+HAL_ADC_PollForConversion (&hadc1, 100);
+raw = (double) HAL_ADC_GetValue (&hadc1);
+```
+---
+**36. Joystick Module**
+
+Y is connected to PC3 configured to ADC1_IN9, X is connected to PA0 configured to ADC1_IN1, B is connected to a no pull input button. To allow multiple channels to be used, Continuous Conversion Mode in ADC1 must be Enabled, and the Number of Conversions must be 2, one for each channel. Each rank must be connected to a channel. A DMA request must be enabled for ADC1 going from peripheral to memory, with the data width being a word.
+
+```
+uint32_t raws[2];
+uint8_t pressed = 0;
+int count = 0;
+
+if (HAL_GPIO_ReadPin (CTB1_GPIO_Port, CTB1_Pin)) {
+	if (!pressed) {
+		count++;
+	  	pressed = 1;
+  }
+} else {
+	pressed = 0;
+}
+
+HAL_ADC_Start_DMA(&hadc1, raws, 2);
+```
+---
