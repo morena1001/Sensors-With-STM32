@@ -9,7 +9,7 @@ This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim
 - [ ] Buzzer beeping
 - [ ] Passize buzzer
 - [ ] Digital push button
-- [ ] Collision flash
+- [x] ~Collision flash~
 - [ ] Line tracking
 - [ ] Infrared obstacle avoidance
 - [x] ~Photo interrupter~
@@ -38,7 +38,7 @@ This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim
 - [ ] Digital IR transmitter
 - [ ] Pulse rate monitor
 - [x] Joystick
-- [ ] Rotary encorder
+- [x] ~Rotary encorder~
 - [ ] Single relay
 - [ ] Linear temperature
 - [ ] Temperature and humidity display

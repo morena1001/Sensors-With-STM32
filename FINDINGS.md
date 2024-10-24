@@ -31,6 +31,19 @@ while (color >= 1000) {
 }
 ```
 ---
+**8. Collision Flash**
+
+S, or the out pin, is connected to PA0 configured to ADC1_IN1. When no collision is detected voltage is High in S, and when the switch is pressed, voltage is Low. May be used for morse code telegraph.
+
+The switch acts like a normal circuit switch, letting current pass through when it is not pressed down.
+
+```
+HAL_ADC_Start(&hadc1);
+HAL_ADC_PollForConversion(&hadc1, 100);
+raw = ((double) HAL_ADC_GetValue(&hadc1) * -1) + 4095;
+HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, raw);
+```
+---
 **11. Photo Interrupter**
 
 V connects to power, G connects to GND, and S is the out pin that is connected to PA0 configured to ADC1_IN1. When no objects are detected, the value returned is low, otherwise it returns the max value possible given the voltage.
@@ -195,5 +208,54 @@ if (HAL_GPIO_ReadPin (CTB1_GPIO_Port, CTB1_Pin)) {
 }
 
 HAL_ADC_Start_DMA(&hadc1, raws, 2);
+```
+---
+**37. Rotary Encoder**
+
+CLK, DT, and SW are connected to software pulled up input pins, and there are two LEDS, LED1 and LED2. When the rotary is turned clockwise, LED1 is turned on, and LED2 is turned off. If the rotary is turned counterclockwise, LED1 is turned off, and LED2 is turned on. If the encoder is pressed down, it will act like a switch button, and its input is caught by the SW pin.
+
+The way it works is that there are three pins, A, B, and C, and two switched, one that connects pin A to Pin C, and the other that connects pin B to C. In this example, Pin A is the CLK pin, Pin B is the DT pin, and Pin C is GND. Both switched are either closed or open at the same time, and turning the encoder will flip their state, from either closed to open, or open to closed. To know the direction of the rotation, the switch connecting A and C and the one connecting B and C change at slightly different times. If rotating clockwise, the switch connecting A and C will change states first, and if rotating counterclockwise, the switch connecting B and C will change states first. 
+
+One weird quirk about the code is that it will check the state of the pins twice per rotation in a somewhat statble way, and any fix the code only check once made my code unstable. Even then, with the current code, if the rotation is fast enough, the signals from the pins might not be processed fast enough, and some data may be lost. This means that if the encoder is rotated fast enough, the value of our count variable may not increase properly. 
+
+```
+bool switched = false;
+int count = 0;
+int previous_pin, current_pin;
+
+...
+
+previous_pin = HAL_GPIO_ReadPin (CLK_GPIO_Port, CLK_Pin);
+while (1) {
+	if (!HAL_GPIO_Read (SW_GPIO_Port, SW_Pin)) {
+		count = 0;
+
+		HAL_GPIO_WritePin (LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin (LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
+	}
+
+	current_pin = HAL_GPIO_ReadPin (CLK_GPIO_Port, CLK_Pin);
+	if (current_pin != previous_pin) {
+		if (HAL_GPIO_ReadPin (DT_GPIO_Port, DT_Pin) != current_pin) {
+			if (!switched) {
+				switched = true;
+				count++;
+			} else {
+				switched = false;
+			}
+			HAL_GPIO_WritePin (LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin (LED2_GPIO_Port, LED2_Pin, GPIO_PIN_RESET);
+		} else {
+			if (!switched) {
+				switched = true;
+				count--;
+			} else {
+				switched = false;
+			}
+			HAL_GPIO_WritePin (LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin (LED2_GPIO_Port, LED2_Pin, GPIO_PIN_SET);
+		}
+	}
+}
 ```
 ---
