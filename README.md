@@ -24,20 +24,20 @@ This project will use 48 different sensors from KEYSTUDIO with an STM32. The aim
 - [x] ~Analog rotation~
 - [x] ~Photoresistor~
 - [x] ~Analog sound~
-- [x] Water level
-- [x] Soil moisture
+- [x] ~Water level~
+- [x] ~Soil moisture~
 - [ ] Analog gas
 - [ ] Analog alcohol
 - [ ] Steam moisture
 - [ ] Analog ceramic vibration
-- [x] Voltage detection
-- [x] Pressure detection
-- [x] Ambient light
+- [x] ~Voltage detection~
+- [x] ~Pressure detection~
+- [x] ~Ambient light~
 - [ ] Ultravoilet light
 - [ ] Digital IR Receiver
 - [ ] Digital IR transmitter
 - [ ] Pulse rate monitor
-- [x] Joystick
+- [x] ~Joystick~
 - [x] ~Rotary encorder~
 - [ ] Single relay
 - [ ] Linear temperature
